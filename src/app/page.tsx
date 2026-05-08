@@ -98,7 +98,7 @@ export default function LandingPage() {
               <Crown size={20} className="text-[#D4A853]" />
             </div>
             <p className="font-mono text-[10px] uppercase tracking-widest text-[#D4A853] opacity-70 mb-2">Restaurant Pro</p>
-            <p className="text-4xl font-bold text-[#F5F0E8] mb-1" style={{ fontFamily: "'Playfair Display', serif" }}>$12<span className="text-lg font-normal opacity-60">/mo</span></p>
+            <p className="text-4xl font-bold text-[#F5F0E8] mb-1" style={{ fontFamily: "'Playfair Display', serif" }}>$29.99<span className="text-lg font-normal opacity-60">/mo</span></p>
             <p className="text-[#E8DCC8]/50 text-sm mb-8">Everything in Free, plus:</p>
             <ul className="space-y-3 mb-8">
               {["Financial dashboard","Menu & plate costing","Food cost % calculator","Sales recording","Delivery tracking","Supplier management","CSV/PDF export"].map(f => (

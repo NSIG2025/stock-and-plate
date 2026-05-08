@@ -31,17 +31,53 @@ export async function POST(req: Request) {
       }
       break
     }
-    case "customer.subscription.updated":
-    case "customer.subscription.deleted": {
+
+    case "customer.subscription.updated": {
       const sub = event.data.object as Stripe.Subscription
-      const isActive = sub.status === "active" || sub.status === "trialing"
+      const status = sub.status
+      const isPro = status === "active" || status === "trialing"
+      const isPastDue = status === "past_due"
       await prisma.user.updateMany({
         where: { stripeSubscriptionId: sub.id },
         data: {
-          subscriptionStatus: isActive ? "ACTIVE" : "CANCELLED",
-          subscriptionTier: isActive ? "PRO" : "FREE",
+          subscriptionStatus: isPro ? "ACTIVE" : isPastDue ? "PAST_DUE" : "CANCELLED",
+          subscriptionTier: isPro ? "PRO" : "FREE",
         },
       })
+      break
+    }
+
+    case "customer.subscription.deleted": {
+      const sub = event.data.object as Stripe.Subscription
+      await prisma.user.updateMany({
+        where: { stripeSubscriptionId: sub.id },
+        data: { subscriptionStatus: "CANCELLED", subscriptionTier: "FREE" },
+      })
+      break
+    }
+
+    // Payment failed — suspend Pro access until resolved
+    case "invoice.payment_failed": {
+      const invoice = event.data.object as Stripe.Invoice & { subscription?: string | { id: string } | null }
+      const subId = typeof invoice.subscription === "string" ? invoice.subscription : (invoice.subscription as { id: string } | null)?.id
+      if (subId) {
+        await prisma.user.updateMany({
+          where: { stripeSubscriptionId: subId },
+          data: { subscriptionStatus: "PAST_DUE", subscriptionTier: "FREE" },
+        })
+      }
+      break
+    }
+
+    case "invoice.payment_succeeded": {
+      const invoice = event.data.object as Stripe.Invoice & { subscription?: string | { id: string } | null }
+      const subId = typeof invoice.subscription === "string" ? invoice.subscription : (invoice.subscription as { id: string } | null)?.id
+      if (subId) {
+        await prisma.user.updateMany({
+          where: { stripeSubscriptionId: subId },
+          data: { subscriptionStatus: "ACTIVE", subscriptionTier: "PRO" },
+        })
+      }
       break
     }
   }

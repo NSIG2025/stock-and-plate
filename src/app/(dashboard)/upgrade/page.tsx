@@ -32,7 +32,7 @@ export default function UpgradePage() {
 
       <div className="bg-[#2C1810] rounded-2xl p-8 shadow-xl">
         <div className="flex items-end gap-2 mb-1">
-          <span className="font-display text-5xl font-bold text-[#F5F0E8]">$12</span>
+          <span className="font-display text-5xl font-bold text-[#F5F0E8]">$29.99</span>
           <span className="text-[#E8DCC8]/50 mb-2">/month</span>
         </div>
         <p className="text-[#D4A853]/70 font-mono text-[10px] uppercase tracking-widest mb-8">Billed monthly · Cancel anytime</p>
@@ -47,7 +47,7 @@ export default function UpgradePage() {
         </ul>
 
         <Button variant="gold" size="lg" className="w-full" onClick={checkout} disabled={loading}>
-          {loading?"Redirecting to checkout...":"Upgrade Now — $12/mo"}
+          {loading?"Redirecting to checkout...":"Upgrade Now — $29.99/mo"}
         </Button>
         <p className="text-center text-[#E8DCC8]/30 text-xs mt-4">Secure payment via Stripe</p>
       </div>

@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils"
 import {
   Package, BookOpen, ShoppingCart, Sparkles,
   LayoutDashboard, UtensilsCrossed, Truck, Users,
-  BarChart3, Settings, Crown, LogOut, ChevronRight
+  BarChart3, Settings, Crown, LogOut, ChevronRight, Shield
 } from "lucide-react"
 
 const FREE_LINKS = [
@@ -28,7 +28,8 @@ const PRO_LINKS = [
 export function Sidebar() {
   const pathname = usePathname()
   const { data: session } = useSession()
-  const isPro = session?.user?.subscriptionTier === "PRO"
+  const isPro = session?.user?.subscriptionTier === "PRO" || session?.user?.isAdmin === true
+  const isAdmin = session?.user?.isAdmin === true
 
   return (
     <aside className="w-64 shrink-0 bg-[#2C1810] min-h-screen flex flex-col">
@@ -67,6 +68,12 @@ export function Sidebar() {
         {!isPro && (
           <Link href="/upgrade" className="flex items-center gap-2 px-3 py-2 rounded text-[#D4A853] hover:bg-[#D4A853]/10 transition-colors text-sm font-medium">
             <Crown size={16} /> Upgrade to Pro
+          </Link>
+        )}
+        {isAdmin && (
+          <Link href="/admin" className={cn("flex items-center gap-2 px-3 py-2 rounded text-[#D4A853]/70 hover:bg-[#D4A853]/10 hover:text-[#D4A853] transition-colors text-sm", pathname === "/admin" && "bg-[#D4A853]/15 text-[#D4A853]")}>
+            <Shield size={16} />
+            Admin
           </Link>
         )}
         <Link href="/settings" className={cn("flex items-center gap-2 px-3 py-2 rounded text-[#F5F0E8]/60 hover:bg-white/6 hover:text-[#F5F0E8] transition-colors text-sm", pathname === "/settings" && "bg-white/8 text-[#F5F0E8]")}>
