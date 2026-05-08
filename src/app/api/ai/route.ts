@@ -8,25 +8,33 @@ export async function POST(req: Request) {
   const session = await getServerSession(authOptions)
   if (!session?.user?.id) return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
 
-  const { action } = await req.json()
+  const body = await req.json()
+  const { action } = body
 
   if (action === "suggest") {
+    const { diet } = body
+
     const pantry = await prisma.pantryItem.findMany({ where: { userId: session.user.id } })
+
+    if (pantry.length === 0) {
+      return NextResponse.json({ recipes: [], empty: true })
+    }
+
     const recipes = await prisma.recipe.findMany({ where: { userId: session.user.id }, select: { name: true } })
-    const pantryNames = pantry.map((p) => `${p.name} (${p.quantity} ${p.unit})`)
+    const pantryNames = pantry.map((p) => p.name + " (" + p.quantity + " " + p.unit + ")")
     const recipeNames = recipes.map((r) => r.name)
-    const suggestions = await suggestRecipes(pantryNames, recipeNames)
+    const suggestions = await suggestRecipes(pantryNames, recipeNames, diet)
     return NextResponse.json({ recipes: suggestions })
   }
 
   if (action === "shopping") {
-    const { recipeIds } = await req.json().catch(() => ({ recipeIds: [] }))
+    const { recipeIds } = body
     const pantry = await prisma.pantryItem.findMany({ where: { userId: session.user.id } })
-    const recipes = recipeIds?.length
+    const selectedRecipes = recipeIds?.length
       ? await prisma.recipe.findMany({ where: { id: { in: recipeIds }, userId: session.user.id }, select: { name: true, servings: true } })
       : []
     const pantryData = pantry.map((p) => ({ name: p.name, quantity: Number(p.quantity), unit: p.unit }))
-    const items = await generateShoppingList(recipes, pantryData)
+    const items = await generateShoppingList(selectedRecipes, pantryData)
     return NextResponse.json({ items })
   }
 
