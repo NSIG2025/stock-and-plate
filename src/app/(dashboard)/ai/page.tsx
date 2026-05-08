@@ -180,7 +180,7 @@ export default function AIPage() {
                 })}
               </div>
               {activeDiet.desc && (
-                <p className="text-center text-[#E8DCC8]/50 text-[11px] mt-3 max-w-lg mx-auto leading-relaxed">
+                <p className="text-center text-[#D4A853]/60 text-[11px] font-mono mt-3 max-w-lg mx-auto leading-relaxed">
                   {activeDiet.desc}
                 </p>
               )}
