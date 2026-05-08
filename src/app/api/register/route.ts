@@ -12,6 +12,7 @@ export async function POST(req: Request) {
     const user = await prisma.user.create({ data: { name, email, password: hashed } })
     return NextResponse.json({ id: user.id, email: user.email })
   } catch (e) {
-    return NextResponse.json({ error: "Registration failed" }, { status: 500 })
+    const msg = e instanceof Error ? e.message : String(e)
+    return NextResponse.json({ error: "Registration failed", detail: msg }, { status: 500 })
   }
 }
