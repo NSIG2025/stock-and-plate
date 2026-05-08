@@ -18,16 +18,29 @@ export async function POST(req: Request) {
     case "checkout.session.completed": {
       const session = event.data.object as Stripe.Checkout.Session
       const userId = session.metadata?.userId
+      const type = session.metadata?.type
+
       if (userId && session.customer) {
-        await prisma.user.update({
-          where: { id: userId },
-          data: {
-            stripeCustomerId: session.customer as string,
-            stripeSubscriptionId: session.subscription as string,
-            subscriptionStatus: "ACTIVE",
-            subscriptionTier: "PRO",
-          },
-        })
+        if (type === "ai_addon") {
+          await prisma.user.update({
+            where: { id: userId },
+            data: {
+              stripeCustomerId: session.customer as string,
+              aiAddonSubscriptionId: session.subscription as string,
+              hasAiAddon: true,
+            },
+          })
+        } else {
+          await prisma.user.update({
+            where: { id: userId },
+            data: {
+              stripeCustomerId: session.customer as string,
+              stripeSubscriptionId: session.subscription as string,
+              subscriptionStatus: "ACTIVE",
+              subscriptionTier: "PRO",
+            },
+          })
+        }
       }
       break
     }
@@ -49,9 +62,14 @@ export async function POST(req: Request) {
 
     case "customer.subscription.deleted": {
       const sub = event.data.object as Stripe.Subscription
+      // Could be Pro sub or AI add-on sub
       await prisma.user.updateMany({
         where: { stripeSubscriptionId: sub.id },
         data: { subscriptionStatus: "CANCELLED", subscriptionTier: "FREE" },
+      })
+      await prisma.user.updateMany({
+        where: { aiAddonSubscriptionId: sub.id },
+        data: { hasAiAddon: false },
       })
       break
     }

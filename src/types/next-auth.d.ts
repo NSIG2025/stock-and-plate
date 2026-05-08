@@ -11,6 +11,7 @@ declare module "next-auth" {
       subscriptionTier?: string
       subscriptionStatus?: string
       isAdmin?: boolean
+      hasAiAddon?: boolean
     }
   }
 }
@@ -21,5 +22,6 @@ declare module "next-auth/jwt" {
     subscriptionTier?: string
     subscriptionStatus?: string
     isAdmin?: boolean
+    hasAiAddon?: boolean
   }
 }

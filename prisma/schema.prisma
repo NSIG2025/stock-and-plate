@@ -23,6 +23,8 @@ model User {
   subscriptionTier     SubscriptionTier   @default(FREE)
   subscriptionEndsAt   DateTime?
   isAdmin              Boolean  @default(false)
+  hasAiAddon           Boolean  @default(false)
+  aiAddonSubscriptionId String? @unique
 
   accounts      Account[]
   sessions      Session[]
