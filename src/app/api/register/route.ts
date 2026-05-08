@@ -11,8 +11,7 @@ export async function POST(req: Request) {
     const hashed = await bcrypt.hash(password, 12)
     const user = await prisma.user.create({ data: { name, email, password: hashed } })
     return NextResponse.json({ id: user.id, email: user.email })
-  } catch (e) {
-    const msg = e instanceof Error ? e.message : String(e)
-    return NextResponse.json({ error: "Registration failed", detail: msg }, { status: 500 })
+  } catch {
+    return NextResponse.json({ error: "Registration failed" }, { status: 500 })
   }
 }
