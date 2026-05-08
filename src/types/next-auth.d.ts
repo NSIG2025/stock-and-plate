@@ -10,6 +10,7 @@ declare module "next-auth" {
       image?: string | null
       subscriptionTier?: string
       subscriptionStatus?: string
+      isAdmin?: boolean
     }
   }
 }
@@ -19,5 +20,6 @@ declare module "next-auth/jwt" {
     id?: string
     subscriptionTier?: string
     subscriptionStatus?: string
+    isAdmin?: boolean
   }
 }

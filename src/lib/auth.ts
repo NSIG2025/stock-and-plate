@@ -39,11 +39,12 @@ export const authOptions: NextAuthOptions = {
       if (token.id) {
         const dbUser = await prisma.user.findUnique({
           where: { id: token.id as string },
-          select: { subscriptionTier: true, subscriptionStatus: true },
+          select: { subscriptionTier: true, subscriptionStatus: true, isAdmin: true },
         })
         if (dbUser) {
           token.subscriptionTier = dbUser.subscriptionTier
           token.subscriptionStatus = dbUser.subscriptionStatus
+          token.isAdmin = dbUser.isAdmin
         }
       }
       return token
@@ -53,6 +54,7 @@ export const authOptions: NextAuthOptions = {
         session.user.id = token.id as string
         session.user.subscriptionTier = token.subscriptionTier as string
         session.user.subscriptionStatus = token.subscriptionStatus as string
+        session.user.isAdmin = token.isAdmin as boolean
       }
       return session
     },

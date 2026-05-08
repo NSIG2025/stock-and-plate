@@ -7,7 +7,7 @@ import { Crown } from "lucide-react"
 export function ProGate({ children, feature = "This feature" }: { children: React.ReactNode; feature?: string }) {
   const { data: session } = useSession()
   const router = useRouter()
-  const isPro = session?.user?.subscriptionTier === "PRO"
+  const isPro = session?.user?.subscriptionTier === "PRO" || session?.user?.isAdmin === true
 
   if (isPro) return <>{children}</>
 
