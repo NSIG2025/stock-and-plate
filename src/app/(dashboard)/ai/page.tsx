@@ -12,15 +12,15 @@ import { AdSlot } from "@/components/layout/ad-slot"
 import { cn } from "@/lib/utils"
 
 const DIETS = [
-  { id: "",           label: "No Restriction", icon: ChefHat,       color: "bg-[#E8DCC8] text-[#2C1810] border-[#D4A853]" },
-  { id: "carnivore",  label: "Carnivore",      icon: Drumstick,     color: "bg-red-50 text-red-800 border-red-300" },
-  { id: "keto",       label: "Keto",           icon: Flame,         color: "bg-orange-50 text-orange-800 border-orange-300" },
-  { id: "paleo",      label: "Paleo",          icon: FlameKindling, color: "bg-amber-50 text-amber-800 border-amber-300" },
-  { id: "whole30",    label: "Whole 30",       icon: Leaf,          color: "bg-lime-50 text-lime-800 border-lime-300" },
-  { id: "vegetarian", label: "Vegetarian",     icon: Leaf,          color: "bg-green-50 text-green-800 border-green-300" },
-  { id: "vegan",      label: "Vegan",          icon: Leaf,          color: "bg-emerald-50 text-emerald-800 border-emerald-300" },
-  { id: "wfpb",       label: "WFPB",           icon: Wheat,         color: "bg-teal-50 text-teal-800 border-teal-300" },
-  { id: "heritage",   label: "Heritage",       icon: FlameKindling, color: "bg-[#2C1810] text-[#D4A853] border-[#8B4513]" },
+  { id: "",           label: "No Restriction", icon: ChefHat,       color: "bg-[#E8DCC8] text-[#2C1810] border-[#D4A853]",    desc: "No dietary rules applied. The AI will suggest whatever makes the best use of your pantry." },
+  { id: "carnivore",  label: "Carnivore",      icon: Drumstick,     color: "bg-red-50 text-red-800 border-red-300",            desc: "Animal products only — meat, poultry, fish, eggs, and dairy. Zero plant foods." },
+  { id: "keto",       label: "Keto",           icon: Flame,         color: "bg-orange-50 text-orange-800 border-orange-300",   desc: "Very low carb, high fat. Under 20g net carbs. No grains, legumes, starchy veg, or sugar." },
+  { id: "paleo",      label: "Paleo",          icon: FlameKindling, color: "bg-amber-50 text-amber-800 border-amber-300",      desc: "Ancestral eating. Meat, fish, eggs, vegetables, fruits, nuts. No grains, dairy, legumes, or processed food." },
+  { id: "whole30",    label: "Whole 30",       icon: Leaf,          color: "bg-lime-50 text-lime-800 border-lime-300",         desc: "Strict 30-day reset. No grains, legumes, dairy, sugar, alcohol, or compliant baked goods — even with approved ingredients." },
+  { id: "vegetarian", label: "Vegetarian",     icon: Leaf,          color: "bg-green-50 text-green-800 border-green-300",      desc: "No meat, poultry, or fish. Eggs and dairy are welcome." },
+  { id: "vegan",      label: "Vegan",          icon: Leaf,          color: "bg-emerald-50 text-emerald-800 border-emerald-300",desc: "No animal products of any kind — no meat, fish, eggs, dairy, or honey." },
+  { id: "wfpb",       label: "WFPB",           icon: Wheat,         color: "bg-teal-50 text-teal-800 border-teal-300",         desc: "Whole Food Plant Based. Plants only, nothing refined — no oils, no white flour, no added sugar. Whole grains, legumes, vegetables, fruit." },
+  { id: "heritage",   label: "Heritage",       icon: FlameKindling, color: "bg-[#2C1810] text-[#D4A853] border-[#8B4513]",    desc: "1850–1910 · No seed oils · Animal fats only · Scratch cooking · Raw dairy · Period-appropriate sweeteners in moderation" },
 ]
 
 export default function AIPage() {
@@ -179,9 +179,9 @@ export default function AIPage() {
                   )
                 })}
               </div>
-              {diet === "heritage" && (
-                <p className="text-center text-[#D4A853]/60 text-[10px] font-mono mt-2 max-w-md mx-auto">
-                  1850–1910 · No seed oils · Animal fats only · Scratch cooking · Raw dairy · Seasonal ingredients
+              {activeDiet.desc && (
+                <p className="text-center text-[#E8DCC8]/50 text-[11px] mt-3 max-w-lg mx-auto leading-relaxed">
+                  {activeDiet.desc}
                 </p>
               )}
             </div>
