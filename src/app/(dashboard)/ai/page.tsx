@@ -372,6 +372,7 @@ export default function AIPage() {
           cookTime: recipe.cookTime || null,
           category: recipe.category || null,
           notes: recipe.instructions?.join("\n") || null,
+          nutritionData: recipe.nutrition ? JSON.stringify(recipe.nutrition) : null,
           isAiGenerated: true,
         }),
       })

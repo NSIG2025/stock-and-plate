@@ -73,16 +73,16 @@ export default function LandingPage() {
       <section className="max-w-6xl mx-auto px-6 py-24">
         <p className="font-mono text-[10px] uppercase tracking-[0.4em] text-[#8B4513] opacity-70 text-center mb-4">Pricing</p>
         <h2 className="text-3xl md:text-4xl font-bold text-[#2C1810] text-center mb-16" style={{ fontFamily: "'Playfair Display', serif" }}>
-          Two Tiers. One Platform.
+          Simple, Honest Pricing.
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
           {/* Free */}
           <div className="bg-white rounded-xl border border-[#2C1810]/10 p-8 shadow-sm">
             <p className="font-mono text-[10px] uppercase tracking-widest text-[#8B7355] mb-2">Home Cook</p>
             <p className="text-4xl font-bold text-[#2C1810] mb-1" style={{ fontFamily: "'Playfair Display', serif" }}>Free</p>
             <p className="text-[#8B7355] text-sm mb-8">Always free, forever.</p>
             <ul className="space-y-3 mb-8">
-              {["Pantry inventory tracking","Ingredient cost tracking","Recipe builder","AI recipe suggestions","Smart shopping lists","Low stock alerts","Cloud sync & accounts"].map(f => (
+              {["Pantry inventory tracking","Ingredient cost tracking","Recipe builder","Smart shopping lists","Low stock alerts","Cloud sync & accounts","Ad-supported (upgrade to remove)"].map(f => (
                 <li key={f} className="flex items-center gap-2.5 text-sm text-[#2C1810]">
                   <Check size={15} className="text-[#4A6741] shrink-0" />{f}
                 </li>
@@ -90,6 +90,25 @@ export default function LandingPage() {
             </ul>
             <Link href="/register" className="block text-center bg-[#2C1810] text-[#F5F0E8] py-2.5 rounded hover:bg-[#3d2214] transition-colors text-sm font-medium">
               Get Started Free
+            </Link>
+          </div>
+          {/* AI Add-on */}
+          <div className="bg-white rounded-xl border border-[#D4A853]/40 p-8 shadow-sm relative">
+            <div className="absolute top-4 right-4">
+              <Sparkles size={18} className="text-[#D4A853]" />
+            </div>
+            <p className="font-mono text-[10px] uppercase tracking-widest text-[#8B4513] mb-2">AI Chef Add-on</p>
+            <p className="text-4xl font-bold text-[#2C1810] mb-1" style={{ fontFamily: "'Playfair Display', serif" }}>$9.99<span className="text-lg font-normal text-[#8B7355]">/mo</span></p>
+            <p className="text-[#8B7355] text-sm mb-8">Add to any free account.</p>
+            <ul className="space-y-3 mb-8">
+              {["AI recipe suggestions from your pantry","8 dietary filters (Keto, Carnivore, Vegan…)","Heritage 1850–1910 mode","Adjustable serving sizes","Full macro & micro nutrition panel","Per-serving calorie tracking"].map(f => (
+                <li key={f} className="flex items-center gap-2.5 text-sm text-[#2C1810]">
+                  <Check size={15} className="text-[#D4A853] shrink-0" />{f}
+                </li>
+              ))}
+            </ul>
+            <Link href="/register" className="block text-center border border-[#D4A853] text-[#8B4513] py-2.5 rounded hover:bg-[#D4A853]/10 transition-colors text-sm font-medium">
+              Add AI Chef
             </Link>
           </div>
           {/* Pro */}
@@ -101,14 +120,14 @@ export default function LandingPage() {
             <p className="text-4xl font-bold text-[#F5F0E8] mb-1" style={{ fontFamily: "'Playfair Display', serif" }}>$29.99<span className="text-lg font-normal opacity-60">/mo</span></p>
             <p className="text-[#E8DCC8]/50 text-sm mb-8">Everything in Free, plus:</p>
             <ul className="space-y-3 mb-8">
-              {["Financial dashboard","Menu & plate costing","Food cost % calculator","Sales recording","Delivery tracking","Supplier management","CSV/PDF export"].map(f => (
+              {["AI Chef (included free)","Financial dashboard","Menu & plate costing","Food cost % calculator","Sales recording","Delivery tracking","Supplier management","No ads"].map(f => (
                 <li key={f} className="flex items-center gap-2.5 text-sm text-[#F5F0E8]">
                   <Check size={15} className="text-[#D4A853] shrink-0" />{f}
                 </li>
               ))}
             </ul>
             <Link href="/register" className="block text-center bg-[#D4A853] text-[#2C1810] py-2.5 rounded hover:bg-[#c49640] transition-colors text-sm font-semibold">
-              Start Free Trial
+              Get Pro Access
             </Link>
           </div>
         </div>
