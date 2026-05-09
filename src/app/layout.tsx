@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import Script from "next/script"
 import "./globals.css"
 import { Toaster } from "sonner"
 import { Providers } from "@/components/layout/providers"
@@ -8,9 +9,21 @@ export const metadata: Metadata = {
   description: "From Pantry to Plate — kitchen intelligence for home cooks and food businesses.",
 }
 
+const ADSENSE_ID = process.env.NEXT_PUBLIC_ADSENSE_PUBLISHER_ID
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
+      <head>
+        {ADSENSE_ID && (
+          <Script
+            async
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-${ADSENSE_ID}`}
+            crossOrigin="anonymous"
+            strategy="afterInteractive"
+          />
+        )}
+      </head>
       <body>
         <Providers>
           {children}
